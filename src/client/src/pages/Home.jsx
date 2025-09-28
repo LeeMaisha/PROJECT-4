@@ -29,7 +29,7 @@ function Home() {
 
       {/* Quick Search */}
       <section className="quick-search">
-        <h2>🔍 Quick Search</h2>
+        <h2>Quick Search</h2>
         <input
           type="text"
           placeholder="Search books by title..."
@@ -43,7 +43,7 @@ function Home() {
 
       {/* Featured Books Carousel */}
       <section className="featured">
-        <h2>🌟 Featured Books</h2>
+        <h2>Featured Books</h2>
         <div className="carousel">
           {featured.length > 0 ? (
             featured.map((book) => (
