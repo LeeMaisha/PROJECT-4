@@ -11,7 +11,7 @@ function BookDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch book details & reviews
+ 
   useEffect(() => {
     const fetchBook = async () => {
       try {
@@ -40,7 +40,7 @@ function BookDetail() {
     Promise.all([fetchBook(), fetchReviews()]).finally(() => setLoading(false));
   }, [id]);
 
-  // Borrow/Return toggle
+
   const handleBorrowToggle = async () => {
     try {
       const response = await fetch(`http://127.0.0.1:5000/books/${id}`, {
@@ -58,7 +58,7 @@ function BookDetail() {
     }
   };
 
-  // Delete book
+  
   const handleDelete = async () => {
     if (!window.confirm("Are you sure you want to delete this book?")) return;
 
@@ -74,7 +74,7 @@ function BookDetail() {
     }
   };
 
-  // Submit review
+ 
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
     if (!rating || !comment.trim()) {
@@ -109,7 +109,7 @@ function BookDetail() {
       <h2>{book.title}</h2>
       <p><strong>Author:</strong> {book.author}</p>
       <p><strong>Genre:</strong> {book.genre}</p>
-      <p><strong>Status:</strong> {book.borrowed ? "Borrowed ❌" : "Available ✅"}</p>
+      <p><strong>Status:</strong> {book.borrowed ? "Borrowed " : "Available "}</p>
       {book.year && <p><strong>Year:</strong> {book.year}</p>}
       {book.description && <p><strong>Description:</strong> {book.description}</p>}
 

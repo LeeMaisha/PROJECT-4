@@ -11,7 +11,7 @@ function BookDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch book + reviews
+  /
   useEffect(() => {
     const fetchBook = async () => {
       try {

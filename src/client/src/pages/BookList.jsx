@@ -6,7 +6,7 @@ function BookList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch books
+ 
   useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -23,7 +23,7 @@ function BookList() {
     fetchBooks();
   }, []);
 
-  // Borrow / Return toggle
+  
   const handleBorrowToggle = async (book) => {
     try {
       const res = await fetch(`http://127.0.0.1:5000/books/${book.id}`, {
@@ -39,7 +39,7 @@ function BookList() {
     }
   };
 
-  // Delete
+ 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this book?")) return;
     try {
@@ -58,7 +58,7 @@ function BookList() {
 
   return (
     <div className="book-list-page">
-      <h2>📚 All Books</h2>
+      <h2>All Books</h2>
 
       {books.length === 0 ? (
         <p>No books available.</p>
@@ -68,7 +68,7 @@ function BookList() {
             <div key={book.id} className="book-card">
               <h3>{book.title}</h3>
               <p>✍ {book.author}</p>
-              <p>📖 {book.genre || "N/A"}</p>
+              <p>{book.genre || "N/A"}</p>
               {book.year && <p>{book.year}</p>}
               <p>
                 <span

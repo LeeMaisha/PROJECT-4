@@ -10,7 +10,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch books from Flask backend
+  
   useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -89,7 +89,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1>📚 Digital Library</h1>
+      <h1>Digital Library</h1>
       <SearchBox onSearch={handleSearch} />
       <AddBook onAdd={handleAddBook} existingBooks={filteredBooks} />
       <BookList books={filteredBooks} onDelete={handleDeleteBook} />
