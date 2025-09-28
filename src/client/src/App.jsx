@@ -1,99 +1,32 @@
-import React, { useEffect, useState } from "react";
-import BookList from "./components/BookList";
-import AddBook from "./components/AddBook";
-import SearchBox from "./components/SearchBox";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import BookList from "./pages/BookList";
+import BookDetail from "./pages/BookDetail";
+import Search from "./pages/Search";
+import AddBook from "./pages/AddBook";
 import "./App.css";
 
 function App() {
-  const [books, setBooks] = useState([]);
-  const [filteredBooks, setFilteredBooks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  // Fetch books from Flask backend
-  useEffect(() => {
-    const fetchBooks = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch("http://127.0.0.1:5000/books");
-        
-        if (!response.ok) {
-          throw new Error('Failed to fetch books');
-        }
-        
-        const data = await response.json();
-        setBooks(data);
-        setFilteredBooks(data);
-        setError(null);
-      } catch (error) {
-        console.error("Error fetching books:", error);
-        setError("Failed to load books. Make sure the backend is running.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBooks();
-  }, []);
-
-  const handleSearch = (query) => {
-    if (!query) {
-      setFilteredBooks(books);
-    } else {
-      setFilteredBooks(
-        books.filter((book) =>
-          book.title.toLowerCase().includes(query.toLowerCase()) ||
-          book.author.toLowerCase().includes(query.toLowerCase())
-        )
-      );
-    }
-  };
-
-  const handleAddBook = (newBook) => {
-    const updatedBooks = [...books, newBook];
-    setBooks(updatedBooks);
-    setFilteredBooks(updatedBooks);
-  };
-
-  const handleDeleteBook = async (id) => {
-    try {
-      const response = await fetch(`http://127.0.0.1:5000/books/${id}`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to delete book');
-      }
-
-      const updated = books.filter((book) => book.id !== id);
-      setBooks(updated);
-      setFilteredBooks(updated);
-    } catch (error) {
-      console.error("Error deleting book:", error);
-      alert("Failed to delete book. Please try again.");
-    }
-  };
-
-  if (loading) {
-    return <div className="container">Loading books...</div>;
-  }
-
-  if (error) {
-    return (
-      <div className="container">
-        <h1>Digital Library</h1>
-        <div className="error">{error}</div>
-      </div>
-    );
-  }
-
   return (
-    <div className="container">
-      <h1>📚 Digital Library</h1>
-      <SearchBox onSearch={handleSearch} />
-      <AddBook onAdd={handleAddBook} existingBooks={filteredBooks} />
-      <BookList books={filteredBooks} onDelete={handleDeleteBook} />
-    </div>
+    <Router>
+      <div className="App">
+        {/* Navbar visible on all pages */}
+        <Navbar />
+
+        {/* Main content */}
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/books" element={<BookList />} />
+            <Route path="/books/:id" element={<BookDetail />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/add-book" element={<AddBook />} />
+          </Routes>
+        </main>
+      </div>
+    </Router>
   );
 }
 
