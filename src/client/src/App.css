@@ -227,3 +227,182 @@ input::placeholder, textarea::placeholder {
   background: #4c00ff;
   color: #fff;
 }
+.home-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.hero {
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  color: white;
+  padding: 40px 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.hero-buttons .btn {
+  margin: 5px;
+}
+
+.quick-search {
+  margin: 30px 0;
+}
+
+.quick-search input {
+  padding: 10px;
+  width: 250px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+}
+
+.search-btn {
+  background: #2575fc;
+  color: white;
+  border-radius: 8px;
+}
+
+.featured {
+  margin: 40px 0;
+}
+
+.carousel {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 10px;
+}
+
+.book-card {
+  min-width: 220px;
+  background: rgb(224, 95, 224);
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.book-card:hover {
+  transform: scale(1.05);
+}
+
+.home-footer {
+  margin-top: 30px;
+  font-style: italic;
+  color: #555;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.book-list-container {
+  padding: 40px;
+  background: linear-gradient(135deg, #f8f9ff, #eef2f7);
+  min-height: 100vh;
+  text-align: center;
+}
+
+.book-list-container h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #2c2c54;
+}
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+}
+
+.book-card {
+  background: darkmagenta;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.book-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.book-card h3 {
+  font-size: 1.3rem;
+  color: rgb(43, 101, 226);
+  margin-bottom: 10px;
+}
+
+.book-card p {
+  font-size: 0.95rem;
+  margin: 5px 0;
+  color: #fff5f5;
+}
+
+.book-actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.borrow-btn {
+  flex: 1;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #4c00ff;
+  color: darkmagenta;
+}
+
+.borrow-btn:hover {
+  background: #6a00ff;
+  transform: scale(1.05);
+}
+
+.borrow-btn.borrowed {
+  background: crimson;
+}
+
+.details-link {
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #4c00ff;
+  border: 2px solid #4c00ff;
+  transition: all 0.3s ease;
+}
+
+.details-link:hover {
+  background: #faf8ff;
+  color: #fff;
+}
+
+.no-books {
+  font-size: 1.2rem;
+  margin-top: 50px;
+  color: #888;
+}

@@ -25,21 +25,26 @@ function BookList() {
 
   
   const handleBorrowToggle = async (book) => {
-    try {
-      const res = await fetch(`http://127.0.0.1:5000/books/${book.id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ borrowed: !book.borrowed }),
-      });
-      if (!res.ok) throw new Error("Failed to update borrow status");
-      const updated = await res.json();
-      setBooks(books.map((b) => (b.id === updated.id ? updated : b)));
-    } catch (err) {
-      alert(err.message);
-    }
-  };
+  try {
+    const res = await fetch(`http://127.0.0.1:5000/books/${book.id}`, {
+      method: "PATCH", // use PATCH or PUT instead of GET
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ borrowed: !book.borrowed }),
+    });
 
- 
+    if (!res.ok) throw new Error("Failed to update borrow status");
+
+    const updated = await res.json();
+
+    // Update state with the new book data
+    setBooks((prevBooks) =>
+      prevBooks.map((b) => (b.id === updated.id ? updated : b))
+    );
+  } catch (err) {
+    alert(err.message);
+  }
+};
+
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this book?")) return;
     try {

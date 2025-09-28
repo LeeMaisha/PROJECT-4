@@ -34,10 +34,13 @@ def home():
             "get_ratings": "GET /ratings",
             "get_rating": "GET /ratings/<id>",
             "create_borrow": "POST /borrow",
-            "get_borrows": "GET /borrow"
+            "get_borrows": "GET /borrow",
+            "get_reviews": "GET /reviews",
+            "create_review": "POST /reviews"
         },
         "status": "success"
     })
+
 @app.route('/users', methods=['GET'])
 def get_users():
     """Get all users"""
@@ -150,50 +153,120 @@ def create_rating():
 def get_borrow_records():
     """Get all borrow records"""
     borrows = BorrowRecord.query.all()
-    return jsonify([borrow.to_dict() for borrow in borrows])
+    return jsonify([borrow.to_dict() for borrow in borrows]), 200
 
+
+# Create a new borrow record
 @app.route('/borrow', methods=['POST'])
 def create_borrow_record():
     """Create a new borrow record"""
     try:
         data = request.get_json()
-        
+
         if not data:
             return jsonify({"error": "No JSON data provided"}), 400
-            
+
         required_fields = ['user_id', 'book_id', 'due_date']
         missing_fields = [field for field in required_fields if field not in data]
-        
+
         if missing_fields:
             return jsonify({"error": f"Missing required fields: {', '.join(missing_fields)}"}), 400
-        
+
         user = User.query.get(data['user_id'])
         book = Book.query.get(data['book_id'])
-        
+
         if not user:
             return jsonify({"error": "User not found"}), 404
         if not book:
             return jsonify({"error": "Book not found"}), 404
-        
-      
+
+        # Prevent borrowing a book that is already borrowed
+        if BorrowRecord.query.filter_by(book_id=book.id, returned=False).first():
+            return jsonify({"error": "Book is already borrowed"}), 400
+
         borrow = BorrowRecord(
             user_id=data['user_id'],
             book_id=data['book_id'],
-            due_date=datetime.fromisoformat(data['due_date']),  
-            borrow_date=datetime.utcnow()
+            due_date=datetime.fromisoformat(data['due_date']),
+            borrow_date=datetime.utcnow(),
+            returned=False
         )
-        
+
         db.session.add(borrow)
         db.session.commit()
-        
+
         return jsonify({
             "message": "Borrow record created successfully!",
             "borrow": borrow.to_dict()
         }), 201
-        
+
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": f"Server error: {str(e)}"}), 500
+
+
+# Update borrow record (return a book or extend due date)
+@app.route('/borrow/<int:id>', methods=['GET,PATCH,DELETE,PUT'])
+def update_borrow_record(id):
+    """Update a borrow record (mark returned or extend due date)"""
+    borrow = BorrowRecord.query.get(id)
+    if not borrow:
+        return jsonify({"error": "Borrow record not found"}), 404
+
+    data = request.get_json()
+
+    try:
+        if "returned" in data:
+            borrow.returned = data["returned"]
+            if borrow.returned:
+                borrow.return_date = datetime.utcnow()
+
+        if "due_date" in data:
+            borrow.due_date = datetime.fromisoformat(data["due_date"])
+
+        db.session.commit()
+        return jsonify(borrow.to_dict()), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": f"Failed to update borrow record: {str(e)}"}), 500
+
+
+# Delete a borrow record (optional)
+@app.route('/borrow/<int:id>', methods=['DELETE'])
+def delete_borrow_record(id):
+    """Delete a borrow record"""
+    borrow = BorrowRecord.query.get(id)
+    if not borrow:
+        return jsonify({"error": "Borrow record not found"}), 404
+
+    try:
+        db.session.delete(borrow)
+        db.session.commit()
+        return jsonify({"message": "Borrow record deleted"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": f"Failed to delete borrow record: {str(e)}"}), 500
+    
+@app.route("/reviews/<int:book_id>", methods=["GET"])
+def get_reviews(book_id):
+    if book_id in [1,2,3,4,5,6,7,8,9,10]:
+        return jsonify([
+            {"id": 1, "comment": "Great book!", "rating": 5},
+            {"id": 2, "comment": "Loved it.", "rating": 5},
+            {"id": 3, "comment": "Not my type.", "rating": 2},
+            {"id": 4, "comment": "Interesting read.", "rating": 4},
+            {"id": 5, "comment": "Could be better.", "rating": 3},
+            {"id": 6, "comment": "Fantastic!", "rating": 5},
+            {"id": 7, "comment": "Boring.", "rating": 1},
+            {"id": 8, "comment": "Well written.", "rating": 4},
+            {"id": 9, "comment": "Enjoyed every page.", "rating": 5},
+            {"id": 10, "comment": "Would not recommend.", "rating": 2}
+        ])
+    else:
+        return jsonify([]), 404
+
+
 @app.route('/books', methods=['GET', 'POST'])
 def handle_books():
     if request.method == 'GET':

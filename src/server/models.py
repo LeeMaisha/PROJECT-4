@@ -100,6 +100,7 @@ class BorrowRecord(db.Model):
             "due_date": self.due_date.isoformat() if self.due_date else None,  # Added due_date
             "return_date": self.return_date.isoformat() if self.return_date else None,
         }
+    
 
 class Rating(db.Model):
     __tablename__ = "ratings"
