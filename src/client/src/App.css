@@ -6,7 +6,7 @@
 }
 
 h1 {
-  color: #e6e6fa; /* lavender for contrast */
+  color: #e6e6fa; 
 }
 
 .search-box input {
@@ -15,7 +15,7 @@ h1 {
   margin: 10px 0;
   border-radius: 5px;
   border: 1px solid #aaa;
-  background: #3b0057; /* lighter purple */
+  background: #3b0057; 
   color: #fff;
 }
 
@@ -35,7 +35,7 @@ h1 {
 }
 
 .add-book-form button {
-  background: #6a0dad; /* purple button */
+  background: #6a0dad; 
   color: white;
   border: none;
   padding: 8px 15px;
@@ -54,8 +54,7 @@ h1 {
 }
 
 .book-card {
-  background: #3b0057; /* dark card */
-  padding: 15px;
+  background: #3b0057; 
   border-radius: 10px;
   box-shadow: 0px 2px 5px rgba(0,0,0,0.3);
   text-align: left;
