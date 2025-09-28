@@ -29,9 +29,9 @@ class User(db.Model):
     def to_dict(self):
         return {
             "id": self.id,
-            "name": self.name,  # Fixed: was "first_name" but field is "name"
+            "name": self.name, 
             "email": self.email,
-            "created_at": self.created_at.isoformat() if self.created_at else None,  # Added ISO format
+            "created_at": self.created_at.isoformat() if self.created_at else None,  
         }
 
 class Book(db.Model):
@@ -40,7 +40,7 @@ class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
     author = db.Column(db.String, nullable=False)
-    published_year = db.Column(db.Date, nullable=True)  # This is a Date object
+    published_year = db.Column(db.Date, nullable=True) 
     description = db.Column(db.Text)
     genre_id = db.Column(db.Integer, db.ForeignKey("genres.id"))
     last_updated = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
@@ -58,10 +58,10 @@ class Book(db.Model):
             "id": self.id,
             "title": self.title,
             "author": self.author,
-            "published_year": self.published_year.isoformat() if self.published_year else None,  # Fixed: convert to ISO string
+            "published_year": self.published_year.isoformat() if self.published_year else None, 
             "description": self.description,
             "genre": self.genre.name if self.genre else None,
-            "last_updated": self.last_updated.isoformat() if self.last_updated else None,  # Added ISO format
+            "last_updated": self.last_updated.isoformat() if self.last_updated else None, 
         }
 
 class Genre(db.Model):
@@ -97,7 +97,7 @@ class BorrowRecord(db.Model):
             "user_id": self.user_id,
             "book_id": self.book_id,
             "borrow_date": self.borrow_date.isoformat() if self.borrow_date else None,
-            "due_date": self.due_date.isoformat() if self.due_date else None,  # Added due_date
+            "due_date": self.due_date.isoformat() if self.due_date else None,  
             "return_date": self.return_date.isoformat() if self.return_date else None,
         }
     
@@ -108,7 +108,7 @@ class Rating(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     book_id = db.Column(db.Integer, db.ForeignKey("books.id"))
-    rating = db.Column(db.Integer, nullable=False)  # Fixed: field is "rating" not "score"
+    rating = db.Column(db.Integer, nullable=False)  
     review = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
@@ -120,7 +120,7 @@ class Rating(db.Model):
             "id": self.id,
             "user_id": self.user_id,
             "book_id": self.book_id,
-            "rating": self.rating,  # Fixed: was "score" but field is "rating"
+            "rating": self.rating,  
             "review": self.review,
-            "created_at": self.created_at.isoformat() if self.created_at else None,  # Fixed: ISO format
+            "created_at": self.created_at.isoformat() if self.created_at else None, 
         }

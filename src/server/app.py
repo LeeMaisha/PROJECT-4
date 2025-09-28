@@ -156,7 +156,6 @@ def get_borrow_records():
     return jsonify([borrow.to_dict() for borrow in borrows]), 200
 
 
-# Create a new borrow record
 @app.route('/borrow', methods=['POST'])
 def create_borrow_record():
     """Create a new borrow record"""
@@ -180,7 +179,7 @@ def create_borrow_record():
         if not book:
             return jsonify({"error": "Book not found"}), 404
 
-        # Prevent borrowing a book that is already borrowed
+       
         if BorrowRecord.query.filter_by(book_id=book.id, returned=False).first():
             return jsonify({"error": "Book is already borrowed"}), 400
 
@@ -205,7 +204,7 @@ def create_borrow_record():
         return jsonify({"error": f"Server error: {str(e)}"}), 500
 
 
-# Update borrow record (return a book or extend due date)
+
 @app.route('/borrow/<int:id>', methods=['GET,PATCH,DELETE,PUT'])
 def update_borrow_record(id):
     """Update a borrow record (mark returned or extend due date)"""
@@ -232,7 +231,7 @@ def update_borrow_record(id):
         return jsonify({"error": f"Failed to update borrow record: {str(e)}"}), 500
 
 
-# Delete a borrow record (optional)
+#
 @app.route('/borrow/<int:id>', methods=['DELETE'])
 def delete_borrow_record(id):
     """Delete a borrow record"""
