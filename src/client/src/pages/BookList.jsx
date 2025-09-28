@@ -27,7 +27,7 @@ function BookList() {
   const handleBorrowToggle = async (book) => {
   try {
     const res = await fetch(`http://127.0.0.1:5000/books/${book.id}`, {
-      method: "PATCH", // use PATCH or PUT instead of GET
+      method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ borrowed: !book.borrowed }),
     });
@@ -36,7 +36,6 @@ function BookList() {
 
     const updated = await res.json();
 
-    // Update state with the new book data
     setBooks((prevBooks) =>
       prevBooks.map((b) => (b.id === updated.id ? updated : b))
     );

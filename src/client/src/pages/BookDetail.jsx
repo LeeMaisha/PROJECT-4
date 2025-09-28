@@ -41,7 +41,7 @@ function BookDetail({ onBorrow }) {
       <h2>{book.title}</h2>
       <p><strong>Author:</strong> {book.author}</p>
       <p><strong>Genre:</strong> {book.genre}</p>
-      <p><strong>Status:</strong> {book.borrowed ? "Borrowed ❌" : "Available ✅"}</p>
+      <p><strong>Status:</strong> {book.borrowed ? "Borrowed " : "Available "}</p>
       {book.year && <p><strong>Year:</strong> {book.year}</p>}
       {book.description && <p>{book.description}</p>}
 
@@ -57,7 +57,7 @@ function BookDetail({ onBorrow }) {
 
       {/* Reviews Section */}
       <section className="reviews">
-        <h3>💬 Reviews & Ratings</h3>
+        <h3> Reviews & Ratings</h3>
         <form onSubmit={handleReviewSubmit} className="review-form">
           <select value={rating} onChange={(e) => setRating(Number(e.target.value))}>
             <option value="0">Rate...</option>
@@ -83,7 +83,7 @@ function BookDetail({ onBorrow }) {
             ))}
           </ul>
         ) : (
-          <p>No reviews yet. Be the first! 🚀</p>
+          <p>No reviews yet. Be the first! </p>
         )}
       </section>
     </div>

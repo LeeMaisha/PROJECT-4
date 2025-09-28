@@ -16,14 +16,14 @@ function Home() {
     <div className="home-container">
       {/* Hero Section */}
       <header className="hero">
-        <h1>📚 Welcome to the Digital Library</h1>
+        <h1>Welcome to the Digital Library</h1>
         <p>
           Discover, borrow, and review your favorite books all in one place.  
           Knowledge is just a click away!
         </p>
         <div className="hero-buttons">
           <Link to="/books" className="btn primary">Browse Books</Link>
-          <Link to="/add-book" className="btn secondary">➕ Add a Book</Link>
+          <Link to="/add-book" className="btn secondary">Add a Book</Link>
         </div>
       </header>
 
@@ -64,7 +64,7 @@ function Home() {
 
       {/* Footer Section */}
       <footer className="home-footer">
-        <p>💡 Tip: Borrow a book today and leave a review to help others!</p>
+        <p>Tip: Borrow a book today and leave a review to help others!</p>
       </footer>
     </div>
   );
