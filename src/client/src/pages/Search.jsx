@@ -72,8 +72,8 @@ function Search() {
             <li key={book.id} className="book-card">
               <h3>{book.title}</h3>
               <p>✍ {book.author}</p>
-              <p>📚 {book.genre || "Unknown"}</p>
-              {book.year && <p>📅 {book.year}</p>}
+              <p>{book.genre || "Unknown"}</p>
+              {book.year && <p>{book.year}</p>}
               <Link to={`/books/${book.id}`} className="details-btn">
                 View Details →
               </Link>

@@ -11,7 +11,7 @@ function BookDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  /
+  
   useEffect(() => {
     const fetchBook = async () => {
       try {
@@ -55,7 +55,7 @@ function BookDetail() {
     }
   };
 
-  // Delete
+ 
   const handleDelete = async () => {
     if (!window.confirm("Delete this book?")) return;
     try {
@@ -69,7 +69,7 @@ function BookDetail() {
     }
   };
 
-  // Submit review
+
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
     if (!rating || !comment.trim()) return alert("Fill in rating and comment!");
@@ -100,7 +100,7 @@ function BookDetail() {
       <p><strong>Author:</strong> {book.author}</p>
       <p><strong>Genre:</strong> {book.genre || "N/A"}</p>
       {book.year && <p><strong>Year:</strong> {book.year}</p>}
-      <p><strong>Status:</strong> {book.borrowed ? "Borrowed ❌" : "Available ✅"}</p>
+      <p><strong>Status:</strong> {book.borrowed ? "Borrowed " : "Available"}</p>
       {book.description && <p><strong>Description:</strong> {book.description}</p>}
 
       <div className="actions">
