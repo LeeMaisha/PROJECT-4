@@ -10,7 +10,7 @@ import os
 from models import User, Book, Genre, Rating, BorrowRecord
 
 
-app = Flask(__name__, static_folder="/../client/dist", static_url_path="/../client/dist")
+app = Flask(__name__, static_folder="/../client/dist", template_folder ="../client/dist")
 CORS(app)
 db_url = os.getenv('DATABASE_URL', 'sqlite:///library.db')
 app.config['SQLALCHEMY_DATABASE_URI'] = db_url
