@@ -20,7 +20,7 @@ db.init_app(app)
 
 migrate = Migrate(app, db)
 
-app.errorhandler(404)
+@app.errorhandler(404)
 def not_found(error):
     return render_template('index.html')
 
@@ -288,9 +288,6 @@ def handle_books():
             print("Error creating book:", str(e))
             return jsonify({"error": f"Server error: {str(e)}"}), 500
 
-@app.errorhandler(404)
-def not_found(error):
-    return jsonify({"error": "Endpoint not found"}), 404
 
 @app.errorhandler(500)
 def internal_error(error):
