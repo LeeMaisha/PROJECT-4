@@ -15,7 +15,7 @@ function Home() {
           </div>
           <div className="stat">
             <h3>24/7</h3>
-            <p>Access</p>
+            <p>Access</p>on 
           </div>
         </div>
       </div>
