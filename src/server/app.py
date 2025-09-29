@@ -6,13 +6,14 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_migrate import Migrate
 import json
 from models import db
-
+import os
 from models import User, Book, Genre, Rating, BorrowRecord
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="../client/build", static_url_path="../client/build")
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///library.db'
+db_url = os.getenv('DATABASE_URL', 'sqlite:///library.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['DEBUG'] = True
 db.init_app(app)
