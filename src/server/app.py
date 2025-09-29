@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, date
 from flask_cors import CORS
@@ -20,27 +20,9 @@ db.init_app(app)
 
 migrate = Migrate(app, db)
 
-
-@app.route('/')
-def home():
-    """Home page with API information"""
-    return jsonify({
-        "message": "Library Management API is running!",
-        "endpoints": {
-            "home": "GET /",
-            "users": "GET /users",
-            "books": "GET /books",
-            "genres": "GET /genres",
-            "create_rating": "POST /ratings",
-            "get_ratings": "GET /ratings",
-            "get_rating": "GET /ratings/<id>",
-            "create_borrow": "POST /borrow",
-            "get_borrows": "GET /borrow",
-            "get_reviews": "GET /reviews",
-            "create_review": "POST /reviews"
-        },
-        "status": "success"
-    })
+app.errorhandler(404)
+def not_found(error):
+    return render_template('index.html')
 
 @app.route('/users', methods=['GET'])
 def get_users():
