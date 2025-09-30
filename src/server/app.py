@@ -47,7 +47,7 @@ def get_books():
 @app.route('/books/<int:book_id>', methods=['GET'])
 def get_book(book_id):
     """Get specific book"""
-    book = Book.query.get(book_id)
+    book = Book.query.where(Book.id == book_id).first()
     if not book:
         return jsonify({"error": "Book not found"}), 404
     return jsonify(book.to_dict())
@@ -67,7 +67,7 @@ def get_all_ratings():
 @app.route('/ratings/<int:rating_id>', methods=['GET'])
 def get_rating(rating_id):
     """Get specific rating"""
-    rating = Rating.query.get(rating_id)
+    rating = Rating.query.where(Rating.id == rating_id).first()
     if not rating:
         return jsonify({"error": "Rating not found"}), 404
     return jsonify(rating.to_dict())
@@ -91,11 +91,11 @@ def create_rating():
             return jsonify({"error": f"Missing required fields: {', '.join(missing_fields)}"}), 400
         
 
-        user = User.query.get(data['user_id'])
+        user = User.query.where(User.id == data['user_id']).first()
         if not user:
             return jsonify({"error": "User not found"}), 404
 
-        book = Book.query.get(data['book_id'])
+        book = Book.query.where(Book.id == data['book_id']).first()
         if not book:
             return jsonify({"error": "Book not found"}), 404
         
@@ -154,8 +154,8 @@ def create_borrow_record():
         if missing_fields:
             return jsonify({"error": f"Missing required fields: {', '.join(missing_fields)}"}), 400
 
-        user = User.query.get(data['user_id'])
-        book = Book.query.get(data['book_id'])
+        user = User.query.where(User.id == data['user_id']).first()
+        book = Book.query.where(Book.id == data['book_id']).first()
 
         if not user:
             return jsonify({"error": "User not found"}), 404

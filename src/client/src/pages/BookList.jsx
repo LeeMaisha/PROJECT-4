@@ -86,7 +86,7 @@ function BookList() {
                 <button onClick={() => handleBorrowToggle(book)}>
                   {book.borrowed ? "Return" : "Borrow"}
                 </button>
-                <Link to={`/books/${book.id}`} className="details-btn">
+                <Link to={`/explore/${book.id}`} className="details-btn">
                   View Details →
                 </Link>
                 <button className="delete-btn" onClick={() => handleDelete(book.id)}>

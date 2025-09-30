@@ -74,7 +74,7 @@ function Search() {
               <p>✍ {book.author}</p>
               <p>{book.genre || "Unknown"}</p>
               {book.year && <p>{book.year}</p>}
-              <Link to={`/books/${book.id}`} className="details-btn">
+              <Link to={`/explore/${book.id}`} className="details-btn">
                 View Details →
               </Link>
             </li>
