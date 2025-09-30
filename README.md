@@ -130,32 +130,6 @@ PUT  /api/borrowing/:id/return # Return a book
 PUT  /api/borrowing/:id/renew  # Renew borrowing period
 ```
 
-### Reviews Endpoints
-
-```http
-GET  /api/reviews/:bookId      # Get reviews for a book
-POST /api/reviews/:bookId      # Submit a review
-PUT  /api/reviews/:id          # Update user's review
-DELETE /api/reviews/:id        # Delete user's review
-
-### Key Tables
-
-**users**
-- id, email, password_hash, first_name, last_name, created_at
-
-**books**
-- id, isbn, title, author, description, genre, publication_year, total_copies, available_copies, cover_image_url
-
-**borrowings**
-- id, user_id, book_id, borrowed_at, due_date, returned_at, renewed_count
-
-**reviews**
-- id, user_id, book_id, rating, review_text, created_at
-
-**categories**
-- id, name, description
-
-##  Deployment
 
 ### Production Build
 
@@ -163,6 +137,7 @@ DELETE /api/reviews/:id        # Delete user's review
 npm create vite@latest
 npm install
 npm run dev
+
 
 
 
