@@ -9,8 +9,7 @@ A comprehensive digital library management system that allows users to browse, b
 - **Book Management** - Add new books to the library collection
 - **Borrowing System** - Check out books with due date tracking
 - **Review System** - Submit and read book reviews and ratings
-- **User Authentication** - Secure login and registration system
-- **Search & Filter** - Advanced search by title, author, genre, or ISBN
+- **Search & Filter** - Advanced search by title, author, genre
 
 ### User Experience
 - **Browse & Search** - Intuitive interface for discovering books
@@ -26,12 +25,6 @@ A comprehensive digital library management system that allows users to browse, b
 - [Database Schema](#database-schema)
 - [Contributing](#contributing)
 
-## 🛠 Installation
-
-### Prerequisites
-- Node.js (v16.0 or higher)
-- PostgreSQL (v12.0 or higher)
-- npm or yarn package manager
 
 ### Setup Steps
 
@@ -43,27 +36,28 @@ A comprehensive digital library management system that allows users to browse, b
 
 2. **Install dependencies**
    ```bash
-   npm install
-   # or
-   yarn install
-   ```
+   pip install flask flask sqlalchemy bcrypt sqlalchemy-serilaizer flask-REST-FUL CORS
+
+ 
+
 
 3. **Database setup**
    ```bash
    # Create database
-   createdb digital_library
+   flask db init
+   flask db upgrade head
    
    # Run migrations
-   npm run migrate
+   flask db migrate -m "" 
    
    # Seed initial data
-   npm run seed
+    python  seed.py
    ```
 
 4. **Environment configuration**
    ```bash
-   cp .env.example .env
-   # Edit .env with your database credentials and API keys
+   pipenv install & pipenv shell 
+   
    ```
 
 5. **Start the application**
@@ -71,44 +65,10 @@ A comprehensive digital library management system that allows users to browse, b
    npm run dev
    ```
 
-The application will be available at `http://localhost:3000`
+The application will be available at `http://localhost:5000`
 
 ##  Configuration
 
-### Environment Variables
-
-Create a `.env` file in the root directory with the following variables:
-
-```env
-# Database Configuration
-DATABASE_URL=postgresql://username:password@localhost:5432/digital_library
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=digital_library
-DB_USER=your_username
-DB_PASSWORD=your_password
-
-# Server Configuration
-PORT=3000
-NODE_ENV=development
-
-# Authentication
-JWT_SECRET=your_jwt_secret_key
-JWT_EXPIRES_IN=7d
-
-# Email Service (for notifications)
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=your_email@gmail.com
-SMTP_PASS=your_app_password
-
-# File Storage
-UPLOAD_PATH=./uploads
-MAX_FILE_SIZE=10MB
-
-# API Keys (if using external services)
-GOOGLE_BOOKS_API_KEY=your_google_books_api_key
-```
 
 ## Usage
 
@@ -170,70 +130,15 @@ PUT  /api/borrowing/:id/return # Return a book
 PUT  /api/borrowing/:id/renew  # Renew borrowing period
 ```
 
-### Reviews Endpoints
-
-```http
-GET  /api/reviews/:bookId      # Get reviews for a book
-POST /api/reviews/:bookId      # Submit a review
-PUT  /api/reviews/:id          # Update user's review
-DELETE /api/reviews/:id        # Delete user's review
-```
-
-### Example API Request
-
-```
-
-## Database Schema
-
-### Key Tables
-
-**users**
-- id, email, password_hash, first_name, last_name, created_at
-
-**books**
-- id, isbn, title, author, description, genre, publication_year, total_copies, available_copies, cover_image_url
-
-**borrowings**
-- id, user_id, book_id, borrowed_at, due_date, returned_at, renewed_count
-
-**reviews**
-- id, user_id, book_id, rating, review_text, created_at
-
-**categories**
-- id, name, description
-
-##  Deployment
 
 ### Production Build
 
 ```bash
+npm create vite@latest
+npm install
+npm run dev
 
-npm run dev 
 
-npm start
-```
-
-### Docker Deployment
-
-```dockerfile
-FROM node:16-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
-RUN npm run build
-EXPOSE 3000
-CMD ["npm", "start"]
-```
-
-### Environment Setup
-
-For production deployment:
-1. Set up a PostgreSQL database
-2. Configure environment variables
-3. Set up SSL certificates
-4. Configure reverse proxy (nginx/Apache)
-5. Set up monitoring and logging
 
 
 We welcome contributions! Please follow these steps:
@@ -253,14 +158,6 @@ We welcome contributions! Please follow these steps:
 - Ensure responsive design
 - Test across different browsers
 
-
-
-##  Version History
-
-- **v2.1.0** - Added review system and advanced search
-- **v2.0.0** - Complete UI overhaul and API restructure
-- **v1.5.0** - Added borrowing notifications and renewals
-- **v1.0.0** - Initial release with basic library functions
 
 ##  Acknowledgments
 
