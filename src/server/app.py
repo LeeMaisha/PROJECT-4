@@ -10,7 +10,7 @@ import os
 from models import User, Book, Genre, Rating, BorrowRecord
 
 
-app = Flask(__name__, static_folder="../client/build/assests", template_folder ="../client/build")
+app = Flask(__name__, static_folder="../client/dist/assets", template_folder ="../client/dist")
 
 CORS(app)
 db_url = os.getenv('DATABASE_URL', 'sqlite:///library.db')
