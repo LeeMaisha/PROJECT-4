@@ -7,7 +7,7 @@ function Home() {
 
   useEffect(() => {
     // Fetch a few featured books
-    fetch("http://127.0.0.1:5000/books")
+    fetch("https://project-4-1-wde4.onrender.com/books")
       .then((res) => res.json())
       .then((data) => setFeatured(data.slice(0, 5))); // first 5 books
   }, []);

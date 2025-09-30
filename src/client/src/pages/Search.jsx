@@ -9,7 +9,7 @@ function Search() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/books")
+    fetch("https://project-4-1-wde4.onrender.com//books")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch books");
         return res.json();

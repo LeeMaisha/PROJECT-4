@@ -15,7 +15,7 @@ function BookDetail() {
   useEffect(() => {
     const fetchBook = async () => {
       try {
-        const res = await fetch(`http://127.0.0.1:5000/books/${id}`);
+        const res = await fetch(`https://project-4-1-wde4.onrender.com/books/${id}`);
         if (!res.ok) throw new Error("Failed to fetch book");
         const data = await res.json();
         setBook(data);
@@ -26,7 +26,7 @@ function BookDetail() {
 
     const fetchReviews = async () => {
       try {
-        const res = await fetch(`http://127.0.0.1:5000/books/${id}/reviews`);
+        const res = await fetch(`https://project-4-1-wde4.onrender.com/books/${id}/reviews`);
         if (res.ok) {
           const data = await res.json();
           setReviews(data);
@@ -42,7 +42,7 @@ function BookDetail() {
   // Borrow toggle
   const handleBorrowToggle = async () => {
     try {
-      const res = await fetch(`http://127.0.0.1:5000/books/${id}`, {
+      const res = await fetch(`https://project-4-1-wde4.onrender.com/books/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ borrowed: !book.borrowed }),
@@ -59,7 +59,7 @@ function BookDetail() {
   const handleDelete = async () => {
     if (!window.confirm("Delete this book?")) return;
     try {
-      const res = await fetch(`http://127.0.0.1:5000/books/${id}`, {
+      const res = await fetch(`https://project-4-1-wde4.onrender.com/books/${id}`, {
         method: "DELETE",
       });
       if (!res.ok) throw new Error("Failed to delete book");
@@ -75,7 +75,7 @@ function BookDetail() {
     if (!rating || !comment.trim()) return alert("Fill in rating and comment!");
 
     try {
-      const res = await fetch(`http://127.0.0.1:5000/books/${id}/reviews`, {
+      const res = await fetch(`https://project-4-1-wde4.onrender.com/${id}/reviews`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ rating, comment }),

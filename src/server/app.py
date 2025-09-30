@@ -8,7 +8,7 @@ import json
 from models import db
 import os
 from models import User, Book, Genre, Rating, BorrowRecord
-
+from seed import create_sample_data
 
 app = Flask(__name__, static_folder="../client/dist/assets", template_folder ="../client/dist")
 CORS(app)
@@ -295,3 +295,4 @@ def internal_error(error):
 
 with app.app_context():
     db.create_all()
+    create_sample_data()

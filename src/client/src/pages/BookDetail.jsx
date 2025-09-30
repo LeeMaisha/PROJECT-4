@@ -10,18 +10,18 @@ function BookDetail({ onBorrow }) {
   const [comment, setComment] = useState("");
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:5000/books/${id}`)
+    fetch(`https://project-4-1-wde4.onrender.com/books/${id}`)
       .then((res) => res.json())
       .then((data) => setBook(data));
 
-    fetch(`http://127.0.0.1:5000/books/${id}/reviews`)
+    fetch(`https://project-4-1-wde4.onrender.com/books/${id}/reviews`)
       .then((res) => res.json())
       .then((data) => setReviews(data));
   }, [id]);
 
   const handleReviewSubmit = (e) => {
     e.preventDefault();
-    fetch(`http://127.0.0.1:5000/books/${id}/reviews`, {
+    fetch(`https://project-4-1-wde4.onrender.com/books/${id}/reviews`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ rating, comment }),
