@@ -10,9 +10,9 @@ const Navbar = () => {
         </Link>
         <ul className="nav-links">
           <li><Link to="/">Home</Link></li>
-          <li><Link to="/books">Books</Link></li>
-          <li><Link to="/search">Search</Link></li>
-          <li><Link to="/add-book">Add Book</Link></li>
+          <li><Link to="/explore">Books</Link></li>
+          <li><Link to="/find">Search</Link></li>
+          <li><Link to="/add">Add Book</Link></li>
         </ul>
       </div>
     </nav>

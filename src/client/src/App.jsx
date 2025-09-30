@@ -19,10 +19,10 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/books" element={<BookList />} />
-            <Route path="/books/:id" element={<BookDetail />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/add-book" element={<AddBook />} />
+            <Route path="/explore" element={<BookList />} />
+            <Route path="/book/:id" element={<BookDetail />} />
+            <Route path="/find" element={<Search />} />
+            <Route path="/add" element={<AddBook />} />
           </Routes>
         </main>
       </div>
