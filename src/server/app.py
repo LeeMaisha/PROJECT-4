@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, date
 from flask_cors import CORS
@@ -6,40 +6,23 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_migrate import Migrate
 import json
 from models import db
-
+import os
 from models import User, Book, Genre, Rating, BorrowRecord
+from seed import create_sample_data
 
-
-app = Flask(__name__)
+app = Flask(__name__, static_folder="../client/dist/assets", template_folder ="../client/dist")
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///library.db'
+db_url = os.getenv('DATABASE_URL', 'sqlite:///library.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['DEBUG'] = True
 db.init_app(app)
 
 migrate = Migrate(app, db)
 
-
-@app.route('/')
-def home():
-    """Home page with API information"""
-    return jsonify({
-        "message": "Library Management API is running!",
-        "endpoints": {
-            "home": "GET /",
-            "users": "GET /users",
-            "books": "GET /books",
-            "genres": "GET /genres",
-            "create_rating": "POST /ratings",
-            "get_ratings": "GET /ratings",
-            "get_rating": "GET /ratings/<id>",
-            "create_borrow": "POST /borrow",
-            "get_borrows": "GET /borrow",
-            "get_reviews": "GET /reviews",
-            "create_review": "POST /reviews"
-        },
-        "status": "success"
-    })
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('index.html')
 
 @app.route('/users', methods=['GET'])
 def get_users():
@@ -64,7 +47,7 @@ def get_books():
 @app.route('/books/<int:book_id>', methods=['GET'])
 def get_book(book_id):
     """Get specific book"""
-    book = Book.query.get(book_id)
+    book = Book.query.where(Book.id == book_id).first()
     if not book:
         return jsonify({"error": "Book not found"}), 404
     return jsonify(book.to_dict())
@@ -84,7 +67,7 @@ def get_all_ratings():
 @app.route('/ratings/<int:rating_id>', methods=['GET'])
 def get_rating(rating_id):
     """Get specific rating"""
-    rating = Rating.query.get(rating_id)
+    rating = Rating.query.where(Rating.id == rating_id).first()
     if not rating:
         return jsonify({"error": "Rating not found"}), 404
     return jsonify(rating.to_dict())
@@ -108,11 +91,11 @@ def create_rating():
             return jsonify({"error": f"Missing required fields: {', '.join(missing_fields)}"}), 400
         
 
-        user = User.query.get(data['user_id'])
+        user = User.query.where(User.id == data['user_id']).first()
         if not user:
             return jsonify({"error": "User not found"}), 404
 
-        book = Book.query.get(data['book_id'])
+        book = Book.query.where(Book.id == data['book_id']).first()
         if not book:
             return jsonify({"error": "Book not found"}), 404
         
@@ -171,8 +154,8 @@ def create_borrow_record():
         if missing_fields:
             return jsonify({"error": f"Missing required fields: {', '.join(missing_fields)}"}), 400
 
-        user = User.query.get(data['user_id'])
-        book = Book.query.get(data['book_id'])
+        user = User.query.where(User.id == data['user_id']).first()
+        book = Book.query.where(Book.id == data['book_id']).first()
 
         if not user:
             return jsonify({"error": "User not found"}), 404
@@ -305,15 +288,11 @@ def handle_books():
             print("Error creating book:", str(e))
             return jsonify({"error": f"Server error: {str(e)}"}), 500
 
-@app.errorhandler(404)
-def not_found(error):
-    return jsonify({"error": "Endpoint not found"}), 404
 
 @app.errorhandler(500)
 def internal_error(error):
     return jsonify({"error": "Internal server error"}), 500
 
-if __name__ == '__main__':
-    print("   GET  /users - Get all users")
-
-    app.run(debug=True, host='0.0.0.0', port=5000)
+with app.app_context():
+    db.create_all()
+    create_sample_data()

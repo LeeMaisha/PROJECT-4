@@ -1,5 +1,4 @@
 from models import User, Book, Genre, Rating, BorrowRecord, db
-from app import app
 from datetime import date
 
 def create_sample_data():
@@ -50,6 +49,3 @@ def create_sample_data():
     db.session.add_all([book1, book2, book3])
     db.session.commit()
     
-with app.app_context():
-    db.create_all()
-    create_sample_data()

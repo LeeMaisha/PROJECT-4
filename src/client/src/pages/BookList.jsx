@@ -10,7 +10,7 @@ function BookList() {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const res = await fetch("http://127.0.0.1:5000/books");
+        const res = await fetch("https://project-4-1-wde4.onrender.com/books");
         if (!res.ok) throw new Error("Failed to fetch books");
         const data = await res.json();
         setBooks(data);
@@ -26,7 +26,7 @@ function BookList() {
   
   const handleBorrowToggle = async (book) => {
   try {
-    const res = await fetch(`http://127.0.0.1:5000/books/${book.id}`, {
+    const res = await fetch(`https://project-4-1-wde4.onrender.com/books/${book.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ borrowed: !book.borrowed }),
@@ -47,7 +47,7 @@ function BookList() {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this book?")) return;
     try {
-      const res = await fetch(`http://127.0.0.1:5000/books/${id}`, {
+      const res = await fetch(`hhttps://project-4-1-wde4.onrender.com/books/${id}`, {
         method: "DELETE",
       });
       if (!res.ok) throw new Error("Failed to delete book");
@@ -86,7 +86,7 @@ function BookList() {
                 <button onClick={() => handleBorrowToggle(book)}>
                   {book.borrowed ? "Return" : "Borrow"}
                 </button>
-                <Link to={`/books/${book.id}`} className="details-btn">
+                <Link to={`/explore/${book.id}`} className="details-btn">
                   View Details →
                 </Link>
                 <button className="delete-btn" onClick={() => handleDelete(book.id)}>
